@@ -1,0 +1,13 @@
+.formCon { 
+  display: flex;
+}
+
+.rateCon{
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.rateCon >  span  {
+    margin-left: 20px;
+}

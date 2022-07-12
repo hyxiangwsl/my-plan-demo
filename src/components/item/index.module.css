@@ -1,0 +1,20 @@
+.item {
+  background: #ccc;
+  display: flex;
+  width: 100%;
+}
+
+.itemCell1 {
+  flex: 3;
+  display: flex;
+  align-items: center;
+}
+
+.itemCell2 {
+  flex: 1;
+  text-align: center;
+}
+
+.textCheck {
+  text-decoration: line-through;
+}

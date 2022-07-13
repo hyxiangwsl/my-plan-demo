@@ -8,15 +8,14 @@
   margin-top: 10px;
 }
 
-.itemCell1 {
+.currencyDescription {
   flex: 3;
   display: flex;
   align-items: center;
 }
 
-.itemCell2 {
+.currency {
   flex: 1;
-  text-align: center;
 }
 
 .textCheck {

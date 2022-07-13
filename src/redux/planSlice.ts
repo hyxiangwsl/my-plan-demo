@@ -33,7 +33,6 @@ export const getExChange = createAsyncThunk("user/getExChange", async (base: str
     `https://api.exchangerate.host/latest?base=${base}&symbols=${other.join(",")}`
   );
   const data = await json.json();
-  console.log("sss", data);
   // const { rates } = data;
   return {
     rateCNYByUSD: getThreeDecimal(data.rates.CNY),

@@ -2,12 +2,11 @@ import Item from "./components/item/Item";
 import Header from "./components/header/Header";
 import styles from "./App.module.css";
 import { useSelector } from "./redux/hooks";
-import styles2 from "./components/item/index.module.css";
+import stylesItem from "./components/item/index.module.css";
 import { useEffect } from "react";
 import storeObj from "./redux/store";
 import { saveState } from "./util/util";
 
-const sum = (a: number, b: number) => a + b;
 
 function App() {
   const planList = useSelector((s) => s.plan.planList);
@@ -16,13 +15,24 @@ function App() {
   const planTodoList = planList.filter((e) => !e.completed);
 
   // 计划花费:
-  const planRUBTotal = planTodoList.reduce((acc, cur) => sum(acc, cur.priceRUB), 0);
-  const planCNYTotal = planTodoList.reduce((acc, cur) => sum(acc, cur.priceCNY), 0);
-  const planUSDTotal = planTodoList.reduce((acc, cur) => sum(acc, cur.priceUSD), 0);
+  let planRUBTotal = 0;
+  let planCNYTotal = 0;
+  let planUSDTotal = 0;
+  planTodoList.forEach((e) => {
+    planRUBTotal += e.priceRUB;
+    planCNYTotal += e.priceCNY;
+    planUSDTotal += e.priceUSD;
+  });
+
   // 总共花费:
-  const totalRUB = planCompletedList.reduce((acc, cur) => sum(acc, cur.priceRUB), 0);
-  const totalCNY = planCompletedList.reduce((acc, cur) => sum(acc, cur.priceCNY), 0);
-  const totalUSD = planCompletedList.reduce((acc, cur) => sum(acc, cur.priceUSD), 0);
+  let totalRUB = 0;
+  let totalCNY = 0;
+  let totalUSD = 0;
+  planCompletedList.forEach((e) => {
+    totalRUB += e.priceRUB;
+    totalCNY += e.priceCNY;
+    totalUSD += e.priceUSD;
+  });
 
   useEffect(() => {
     return () => {
@@ -45,10 +55,10 @@ function App() {
           ))}
 
           <div className={styles.item}>
-            <div className={styles2.itemCell1}>将要花费:</div>
-            <div className={styles2.itemCell2}>₽{planRUBTotal}</div>
-            <div className={styles2.itemCell2}>¥{planCNYTotal}</div>
-            <div className={styles2.itemCell2}>${planUSDTotal}</div>
+            <div className={stylesItem.currencyDescription}>将要花费:</div>
+            <div className={stylesItem.currency}>₽{planRUBTotal}</div>
+            <div className={stylesItem.currency}>¥{planCNYTotal}</div>
+            <div className={stylesItem.currency}>${planUSDTotal}</div>
           </div>
         </div>
       )}
@@ -59,10 +69,10 @@ function App() {
             <Item {...item} key={item.id} />
           ))}
           <div className={styles.item}>
-            <div className={styles2.itemCell1}>一共花了:</div>
-            <div className={styles2.itemCell2}>₽{totalRUB}</div>
-            <div className={styles2.itemCell2}>¥{totalCNY}</div>
-            <div className={styles2.itemCell2}>${totalUSD}</div>
+            <div className={stylesItem.currencyDescription}>一共花了:</div>
+            <div className={stylesItem.currency}>₽{totalRUB}</div>
+            <div className={stylesItem.currency}>¥{totalCNY}</div>
+            <div className={stylesItem.currency}>${totalUSD}</div>
           </div>
         </div>
       )}

@@ -16,6 +16,7 @@ export interface Plan {
   priceCNY: number; // 价格
   priceRUB: number; // 价格
   priceUSD: number; // 价格
+  timestamp: number; // 时间戳(更新的时间戳)
 }
 
 const defaultState: planState = {
@@ -49,7 +50,7 @@ export const planSlice = createSlice({
     addPlan: (state, action) => {
       return {
         ...state,
-        planList: [...state.planList, action.payload],
+        planList: [action.payload, ...state.planList],
       };
     },
     // 完成计划
@@ -57,7 +58,9 @@ export const planSlice = createSlice({
       return {
         ...state,
         planList: state.planList.map((item) =>
-          item.id === payload.id ? { ...item, completed: payload.completed } : item
+          item.id === payload.id
+            ? { ...item, completed: payload.completed, timestamp: new Date().getTime() }
+            : item
         ),
       };
     },

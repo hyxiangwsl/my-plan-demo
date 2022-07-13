@@ -75,6 +75,7 @@ const Header: React.FC = () => {
         priceRUB: getThreeDecimal(priceRUB),
         priceCNY: getThreeDecimal(priceCNY),
         priceUSD: getThreeDecimal(priceUSD),
+        timestamp: new Date().getTime(),
       })
     );
     // 清空输入框

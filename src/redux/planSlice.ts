@@ -12,7 +12,7 @@ interface planState {
 export interface Plan {
   task: string; // 任务名
   completed: boolean; // 是否完成
-  id: number; // id
+  id: string; // id
   priceCNY: number; // 价格
   priceRUB: number; // 价格
   priceUSD: number; // 价格
@@ -36,7 +36,7 @@ export const getExChange = createAsyncThunk("user/getExChange", async (base: str
   console.log("sss", data);
   // const { rates } = data;
   return {
-    rateCNYByUSD:getThreeDecimal(data.rates.CNY),
+    rateCNYByUSD: getThreeDecimal(data.rates.CNY),
     rateRUBByUSD: getThreeDecimal(data.rates.RUB),
     rateRUBByCNY: getThreeDecimal(data.rates.RUB / data.rates.CNY),
   };
@@ -45,14 +45,30 @@ export const getExChange = createAsyncThunk("user/getExChange", async (base: str
 export const planSlice = createSlice({
   name: "plan",
   initialState: defaultState,
-  reducers: {},
+  reducers: {
+    // 添加计划
+    addPlan: (state, action) => {
+      return {
+        ...state,
+        planList: [...state.planList, action.payload],
+      };
+    },
+    // 完成计划
+    donePlan: (state, { payload }) => {
+      return {
+        ...state,
+        planList: state.planList.map((item) =>
+          item.id === payload.id ? { ...item, completed: payload.completed } : item
+        ),
+      };
+    },
+  },
   extraReducers: {
     [getExChange.pending.type]: (state) => ({
       ...state,
       loading: true,
     }),
     [getExChange.fulfilled.type]: (state, action) => {
-      console.log("j", action);
       return {
         ...state,
         loading: false,
